@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UCSC Rec CrowdApp</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <h1>UCSC Rec CrowdApp</h1>
+      <p>
+        Live occupancy + student crowd reports for UCSC recreation spaces.
+      </p>
+      <div class="top-actions">
+        <a
+          class="button secondary"
+          href="https://campusrec.ucsc.edu/FacilityOccupancy"
+          target="_blank"
+          rel="noreferrer"
+          >Open official UCSC occupancy page</a
+        >
+        <button id="refreshButton" class="button">Refresh occupancy feed</button>
+      </div>
+      <p id="statusText" class="status">Loading occupancy data…</p>
+    </header>
+
+    <main class="layout">
+      <section class="card">
+        <div class="section-title-row">
+          <h2>Facility crowd levels</h2>
+          <span id="lastUpdated" class="muted">Not updated yet</span>
+        </div>
+        <p class="muted small">
+          Uses the UCSC occupancy page content when available. If live data cannot be
+          read due to cross-site restrictions, a fallback sample is shown so users can
+          still post crowd reports.
+        </p>
+        <div id="facilityGrid" class="grid"></div>
+      </section>
+
+      <section class="card">
+        <h2>Submit a line/crowd report</h2>
+        <form id="reportForm" class="stack">
+          <label>
+            Facility
+            <select id="reportFacility" required></select>
+          </label>
+          <label>
+            How long is the line?
+            <input
+              id="lineLength"
+              type="text"
+              placeholder="e.g., 8 min to get a squat rack"
+              maxlength="120"
+              required
+            />
+          </label>
+          <label>
+            Notes (optional)
+            <textarea
+              id="reportNotes"
+              rows="3"
+              maxlength="220"
+              placeholder="Anything else people should know?"
+            ></textarea>
+          </label>
+          <button class="button" type="submit">Post report</button>
+        </form>
+        <ul id="reportList" class="feed"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Ask / answer quick questions</h2>
+        <form id="questionForm" class="stack">
+          <label>
+            Question
+            <input
+              id="questionText"
+              type="text"
+              maxlength="160"
+              placeholder='e.g., "Is basketball court #2 open right now?"'
+              required
+            />
+          </label>
+          <button class="button" type="submit">Ask question</button>
+        </form>
+
+        <ul id="questionList" class="feed"></ul>
+      </section>
+    </main>
+
+    <template id="questionItemTemplate">
+      <li class="question-item">
+        <div class="question-header"></div>
+        <p class="question-text"></p>
+        <form class="answer-form inline-form">
+          <input
+            class="answer-input"
+            type="text"
+            maxlength="180"
+            placeholder="Post an answer…"
+            required
+          />
+          <button class="button small" type="submit">Reply</button>
+        </form>
+        <ul class="answers"></ul>
+      </li>
+    </template>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
