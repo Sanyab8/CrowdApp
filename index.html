@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UCSC Rec CrowdApp</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-glow bg-glow-a"></div>
+    <div class="bg-glow bg-glow-b"></div>
+
+    <header class="hero shell">
+      <div>
+        <h1>UCSC Rec CrowdApp</h1>
+        <p>Live crowds, closing times, and student-powered updates in one place.</p>
+      </div>
+
+      <div class="hero-actions">
+        <a
+          class="button ghost"
+          href="https://campusrec.ucsc.edu/FacilityOccupancy"
+          target="_blank"
+          rel="noreferrer"
+          >Official UCSC occupancy</a
+        >
+        <button id="refreshButton" class="button">Refresh now</button>
+      </div>
+
+      <div class="hero-meta">
+        <p id="statusText">Loading occupancy data…</p>
+        <p id="lastUpdated">Not updated yet</p>
+      </div>
+
+      <section class="stats-row" id="statsRow"></section>
+    </header>
+
+    <main class="shell main-grid">
+      <section class="panel wide">
+        <div class="panel-head">
+          <h2>Facility crowd levels</h2>
+          <div class="filters">
+            <label>
+              Search
+              <input id="searchInput" type="text" placeholder="e.g., basketball" />
+            </label>
+            <label>
+              Sort by
+              <select id="sortSelect">
+                <option value="crowd-asc">Least crowded</option>
+                <option value="crowd-desc">Most crowded</option>
+                <option value="name-asc">Name A-Z</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <p class="muted small">
+          Tip: Click “Report line” on any facility card to instantly post wait time for
+          that location.
+        </p>
+
+        <div id="facilityGrid" class="facility-grid"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Post a line report</h2>
+        <form id="reportForm" class="stack">
+          <label>
+            Facility
+            <select id="reportFacility" required></select>
+          </label>
+          <label>
+            Line wait
+            <input
+              id="lineLength"
+              type="text"
+              maxlength="120"
+              placeholder="e.g. 12 minutes for free bench"
+              required
+            />
+          </label>
+          <label>
+            Notes (optional)
+            <textarea id="reportNotes" rows="3" maxlength="220"></textarea>
+          </label>
+          <button class="button" type="submit">Share report</button>
+        </form>
+
+        <ul id="reportList" class="feed"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>Ask the community</h2>
+        <form id="questionForm" class="stack">
+          <label>
+            Question
+            <input
+              id="questionText"
+              type="text"
+              maxlength="160"
+              placeholder='e.g. "Is volleyball court #1 free now?"'
+              required
+            />
+          </label>
+          <button class="button" type="submit">Ask question</button>
+        </form>
+
+        <ul id="questionList" class="feed"></ul>
+      </section>
+    </main>
+
+    <template id="questionItemTemplate">
+      <li class="question-item">
+        <div class="question-header"></div>
+        <p class="question-text"></p>
+        <form class="answer-form inline-form">
+          <input
+            class="answer-input"
+            type="text"
+            maxlength="180"
+            placeholder="Post an answer…"
+            required
+          />
+          <button class="button small" type="submit">Reply</button>
+        </form>
+        <ul class="answers"></ul>
+      </li>
+    </template>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
